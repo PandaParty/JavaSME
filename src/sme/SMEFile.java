@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
 
-public class SMEFile {
+public class SMEFile implements SMEIO{
     private Level level;
     private File file;
 
@@ -14,7 +14,7 @@ public class SMEFile {
         level = _level;
     }
 
-    public void write(String input, Level runLevel){
+    public void output(String input, Level runLevel){
         if(runLevel == level){
             try {
                 Files.write(file.toPath(), input.getBytes());
@@ -25,7 +25,7 @@ public class SMEFile {
     }
 
     //Needs to support possibly reading from lower level to higher.
-    public String read(Level runLevel, HashMap<SMEFile, String> map){
+    public String input(Level runLevel, HashMap<SMEIO, String> map){
         if(runLevel == level) {
             try{
                 String result = Files.readAllLines(file.toPath()).get(0);
