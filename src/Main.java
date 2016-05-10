@@ -33,7 +33,6 @@ public class Main {
         lowFile.output(highContents, level);
     }
 
-
     private static void example3(Level level, HashMap<SMEIO, String> map){
         System.out.println("Running at level: " + level.toString());
         SMEStandardIO lowLevelStandardIO = new SMEStandardIO(Level.LOW);
