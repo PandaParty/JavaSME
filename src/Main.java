@@ -9,6 +9,18 @@ public class Main {
         List<Triple<SMEIO, String, IO>> trace = new ArrayList<>();
         example3(Level.LOW, trace);
         example3(Level.HIGH, trace);
+
+        for(Triple<SMEIO, String, IO> t : trace){
+            System.out.println("Channel: " + t.a.toString() + " "+ t.c.toString() + ":" + t.b.toString());
+            for(Triple<SMEIO, String, IO> other : trace){
+                if(t != other)
+                {
+                    if(t.a.equals(other.a) && t.c.equals(other.c) && t.b.equals(other.b)){
+                        System.out.println("Duplicate found");
+                    }
+                }
+            }
+        }
     }
 
     private static void example1(Level level, List<Triple<SMEIO, String, IO>> trace){

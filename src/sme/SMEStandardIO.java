@@ -11,8 +11,8 @@ public class SMEStandardIO implements SMEIO {
     }
 
     public void output(String s, Level runLevel, List<Triple<SMEIO, String, IO>> trace){
+        trace.add(new Triple<>(this, s, IO.OUTPUT));
         if(level == runLevel){
-            trace.add(new Triple<>(this, s, IO.OUTPUT));
             System.out.println(s);
         }
     }

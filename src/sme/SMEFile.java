@@ -15,10 +15,10 @@ public class SMEFile implements SMEIO{
     }
 
     public void output(String input, Level runLevel, List<Triple<SMEIO, String, IO>> trace){
+        trace.add(new Triple<>(this, input, IO.OUTPUT));
         if(runLevel == level){
             try {
                 Files.write(file.toPath(), input.getBytes());
-                trace.add(new Triple<>(this, input, IO.OUTPUT));
             }catch(IOException ioe){
                 System.err.println(ioe.getMessage());
             }
