@@ -16,16 +16,16 @@ public class SMEStandardIO implements SMEIO {
         }
     }
 
-    public String input(Level runLevel, HashMap<SMEIO, String> map){
+    public String input(Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
         if(runLevel == level){
             Scanner scan = new Scanner(System.in);
             String inputString = scan.nextLine();
-            map.put(this, inputString);
+            map.put(this, new Pair(inputString, IO.INPUT));
             return inputString;
         }
         else if(runLevel.higherThan(level)){
             if(map.containsKey(this)){
-                return map.get(this);
+                return map.get(this).a;
             }
             else{
                 return "Shit's on fire, yo";

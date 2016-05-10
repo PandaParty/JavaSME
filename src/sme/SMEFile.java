@@ -25,11 +25,11 @@ public class SMEFile implements SMEIO{
     }
 
     //Needs to support possibly reading from lower level to higher.
-    public String input(Level runLevel, HashMap<SMEIO, String> map){
+    public String input(Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
         if(runLevel == level) {
             try{
                 String result = Files.readAllLines(file.toPath()).get(0);
-                map.put(this, result);
+                map.put(this, new Pair(result, IO.INPUT));
                 return result;
             }catch(IOException ioe) {
                 System.err.println(ioe.getMessage());
@@ -37,7 +37,7 @@ public class SMEFile implements SMEIO{
         }
         else if(runLevel.higherThan(level)){
             if(map.containsKey(this)){
-                return map.get(this);
+                return map.get(this).a;
             }
             else{
                 return "Shit's on fire, yo";

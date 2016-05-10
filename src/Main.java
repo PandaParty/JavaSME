@@ -1,19 +1,16 @@
-import sme.Level;
-import sme.SMEFile;
-import sme.SMEIO;
-import sme.SMEStandardIO;
+import sme.*;
 
 import java.io.File;
 import java.util.HashMap;
 
 public class Main {
     public static void main(String[] args){
-        HashMap<SMEIO, String> map = new HashMap<>();
+        HashMap<SMEIO, Pair<String, IO>> map = new HashMap<>();
         example4(Level.LOW, map);
         example4(Level.HIGH, map);
     }
 
-    private static void example1(Level level, HashMap<SMEIO, String> map){
+    private static void example1(Level level, HashMap<SMEIO, Pair<String, IO>> map){
         System.out.println("Running at level: " + level.toString());
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
@@ -23,7 +20,7 @@ public class Main {
         highFile.output(lowContents, level);
     }
 
-    private static void example2(Level level, HashMap<SMEIO, String> map){
+    private static void example2(Level level, HashMap<SMEIO, Pair<String, IO>> map){
         System.out.println("Running at level: " + level.toString());
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
@@ -33,7 +30,7 @@ public class Main {
         lowFile.output(highContents, level);
     }
 
-    private static void example3(Level level, HashMap<SMEIO, String> map){
+    private static void example3(Level level, HashMap<SMEIO, Pair<String, IO>> map){
         System.out.println("Running at level: " + level.toString());
         SMEStandardIO lowLevelStandardIO = new SMEStandardIO(Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
@@ -42,7 +39,7 @@ public class Main {
         highFile.output(input, level);
     }
 
-    private static void example4(Level level, HashMap<SMEIO, String> map){
+    private static void example4(Level level, HashMap<SMEIO, Pair<String, IO>> map){
         System.out.println("Running at level: " + level.toString());
         SMEStandardIO highLevelStandardIO = new SMEStandardIO(Level.HIGH);
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
