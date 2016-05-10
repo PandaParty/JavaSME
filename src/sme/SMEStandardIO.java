@@ -1,6 +1,6 @@
 package sme;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class SMEStandardIO implements SMEIO {
@@ -10,27 +10,29 @@ public class SMEStandardIO implements SMEIO {
         level = _level;
     }
 
-    public void output(String s, Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
+    public void output(String s, Level runLevel, List<Triple<SMEIO, String, IO>> trace){
         if(level == runLevel){
-            map.put(this, new Pair<>(s, IO.OUTPUT));
+            trace.add(new Triple<>(this, s, IO.OUTPUT));
             System.out.println(s);
         }
     }
 
-    public String input(Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
+    public String input(Level runLevel, List<Triple<SMEIO, String, IO>> trace){
         if(runLevel == level){
             Scanner scan = new Scanner(System.in);
             String inputString = scan.nextLine();
-            map.put(this, new Pair<>(inputString, IO.INPUT));
+            trace.add(new Triple<>(this, inputString, IO.INPUT));
             return inputString;
         }
         else if(runLevel.higherThan(level)){
-            if(map.containsKey(this)){
-                return map.get(this).a;
+            for(Triple<SMEIO, String, IO> t : trace){
+                if(t.a.equals(this) && t.c == IO.INPUT){
+                    String res = t.b;
+                    trace.remove(t);
+                    return res;
+                }
             }
-            else{
-                return "Shit's on fire, yo";
-            }
+            return "Shit's on fire, yo";
         }
         return "Can not read input of higher level";
     }

@@ -3,7 +3,7 @@ package sme;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.HashMap;
+import java.util.List;
 
 public class SMEFile implements SMEIO{
     private Level level;
@@ -14,11 +14,11 @@ public class SMEFile implements SMEIO{
         level = _level;
     }
 
-    public void output(String input, Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
+    public void output(String input, Level runLevel, List<Triple<SMEIO, String, IO>> trace){
         if(runLevel == level){
             try {
                 Files.write(file.toPath(), input.getBytes());
-                map.put(this, new Pair<>(input, IO.OUTPUT));
+                trace.add(new Triple<>(this, input, IO.OUTPUT));
             }catch(IOException ioe){
                 System.err.println(ioe.getMessage());
             }
@@ -26,21 +26,23 @@ public class SMEFile implements SMEIO{
     }
 
     //Needs to support possibly reading from lower level to higher.
-    public String input(Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
+    public String input(Level runLevel, List<Triple<SMEIO, String, IO>> trace){
         if(runLevel == level) {
             try{
                 String result = Files.readAllLines(file.toPath()).get(0);
-                map.put(this, new Pair<>(result, IO.INPUT));
+                trace.add(new Triple<>(this, result, IO.INPUT));
                 return result;
             }catch(IOException ioe) {
                 System.err.println(ioe.getMessage());
             }
         }
-        else if(runLevel.higherThan(level)){
-            if(map.containsKey(this)){
-                return map.get(this).a;
-            }
-            else{
+        else if(runLevel.higherThan(level)) {
+            for (Triple<SMEIO, String, IO> t : trace) {
+                if (t.a.equals(this) && t.c == IO.INPUT) {
+                    String res = t.b;
+                    trace.remove(t);
+                    return res;
+                }
                 return "Shit's on fire, yo";
             }
         }
