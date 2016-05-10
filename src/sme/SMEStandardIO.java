@@ -10,8 +10,9 @@ public class SMEStandardIO implements SMEIO {
         level = _level;
     }
 
-    public void output(String s, Level runLevel){
+    public void output(String s, Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
         if(level == runLevel){
+            map.put(this, new Pair<>(s, IO.OUTPUT));
             System.out.println(s);
         }
     }
@@ -20,7 +21,7 @@ public class SMEStandardIO implements SMEIO {
         if(runLevel == level){
             Scanner scan = new Scanner(System.in);
             String inputString = scan.nextLine();
-            map.put(this, new Pair(inputString, IO.INPUT));
+            map.put(this, new Pair<>(inputString, IO.INPUT));
             return inputString;
         }
         else if(runLevel.higherThan(level)){

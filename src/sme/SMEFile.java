@@ -14,10 +14,11 @@ public class SMEFile implements SMEIO{
         level = _level;
     }
 
-    public void output(String input, Level runLevel){
+    public void output(String input, Level runLevel, HashMap<SMEIO, Pair<String, IO>> map){
         if(runLevel == level){
             try {
                 Files.write(file.toPath(), input.getBytes());
+                map.put(this, new Pair<>(input, IO.OUTPUT));
             }catch(IOException ioe){
                 System.err.println(ioe.getMessage());
             }
@@ -29,7 +30,7 @@ public class SMEFile implements SMEIO{
         if(runLevel == level) {
             try{
                 String result = Files.readAllLines(file.toPath()).get(0);
-                map.put(this, new Pair(result, IO.INPUT));
+                map.put(this, new Pair<>(result, IO.INPUT));
                 return result;
             }catch(IOException ioe) {
                 System.err.println(ioe.getMessage());
