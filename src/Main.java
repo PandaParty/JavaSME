@@ -7,17 +7,23 @@ import java.util.List;
 public class Main {
     public static void main(String[] args){
         List<Triple<SMEIO, String, IO>> trace = new ArrayList<>();
-        example3(Level.LOW, trace);
-        example3(Level.HIGH, trace);
+        example4(Level.LOW, trace);
+        example4(Level.HIGH, trace);
 
         for(Triple<SMEIO, String, IO> t : trace){
             System.out.println("Channel: " + t.a.toString() + " "+ t.c.toString() + ":" + t.b.toString());
-            for(Triple<SMEIO, String, IO> other : trace){
-                if(t != other)
-                {
-                    if(t.a.equals(other.a) && t.c.equals(other.c) && t.b.equals(other.b)){
-                        System.out.println("Duplicate found");
+            if(t.c == IO.OUTPUT) {
+                boolean foundMatch = false;
+                for (Triple<SMEIO, String, IO> other : trace) {
+                    if (t != other) {
+                        if (t.a.equals(other.a) && t.b.equals(other.b)) {
+                            System.out.println("Duplicate found");
+                            foundMatch = true;
+                        }
                     }
+                }
+                if(!foundMatch){
+                    System.out.println("ALERT ALERT ALERT!");
                 }
             }
         }
@@ -58,7 +64,7 @@ public class Main {
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         highLevelStandardIO.output("Please input your password", level, trace);
         String password = highLevelStandardIO.input(level, trace);
-        if(password == "master"){
+        if(password.equals("master")){
             lowFile.output("illegal flow was executed", level, trace);
         }
     }
