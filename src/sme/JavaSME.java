@@ -6,8 +6,8 @@ import java.util.function.BiConsumer;
 
 public class JavaSME {
 
-    public static void execute(BiConsumer<Level, List<Triple<SMEIO, String, IO>>> f){
-        List<Triple<SMEIO, String, IO>> trace = new ArrayList<>();
+    public static void execute(BiConsumer<Level, List<TraceItem>> f){
+        List<TraceItem> trace = new ArrayList<>();
         f.accept(Level.LOW, trace);
         f.accept(Level.HIGH, trace);
         try{
@@ -18,18 +18,18 @@ public class JavaSME {
         }
     }
 
-    public static void checkFlow(List<Triple<SMEIO, String, IO>> trace) throws Exception{
+    public static void checkFlow(List<TraceItem> trace) throws Exception{
         for(int i = 0; i < trace.size(); i++){
-            if(trace.get(i).c != IO.OUTPUT){
+            if(trace.get(i).getIoType() != IO.OUTPUT){
                 trace.remove(i);
                 i--;
             }
         }
-        for(Triple<SMEIO, String, IO> t : trace){
+        for(TraceItem t : trace){
             boolean foundMatch = false;
-            for (Triple<SMEIO, String, IO> other : trace) {
+            for (TraceItem other : trace) {
                 if (t != other) {
-                    if (t.a.equals(other.a) && t.b.equals(other.b)) {
+                    if (t.getChannel().equals(other.getChannel()) && t.getValue().equals(other.getValue())) {
                         foundMatch = true;
                     }
                 }

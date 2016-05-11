@@ -14,8 +14,8 @@ public class SMEFile implements SMEIO{
         level = _level;
     }
 
-    public void output(String input, Level runLevel, List<Triple<SMEIO, String, IO>> trace){
-        trace.add(new Triple<>(this, input, IO.OUTPUT));
+    public void output(String input, Level runLevel, List<TraceItem> trace){
+        trace.add(new TraceItem(this, input, IO.OUTPUT));
         if(runLevel == level){
             try {
                 Files.write(file.toPath(), input.getBytes());
@@ -26,20 +26,20 @@ public class SMEFile implements SMEIO{
     }
 
     //Needs to support possibly reading from lower level to higher.
-    public String input(Level runLevel, List<Triple<SMEIO, String, IO>> trace){
+    public String input(Level runLevel, List<TraceItem> trace){
         if(runLevel == level) {
             try{
                 String result = Files.readAllLines(file.toPath()).get(0);
-                trace.add(new Triple<>(this, result, IO.INPUT));
+                trace.add(new TraceItem(this, result, IO.INPUT));
                 return result;
             }catch(IOException ioe) {
                 System.err.println(ioe.getMessage());
             }
         }
         else if(runLevel.higherThan(level)) {
-            for (Triple<SMEIO, String, IO> t : trace) {
-                if (t.a.equals(this) && t.c == IO.INPUT) {
-                    String res = t.b;
+            for (TraceItem t : trace) {
+                if (t.getChannel().equals(this) && t.getIoType() == IO.INPUT) {
+                    String res = t.getValue();
                     trace.remove(t);
                     return res;
                 }

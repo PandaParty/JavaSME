@@ -8,7 +8,7 @@ public class Main {
         JavaSME.execute(Main::example4);
     }
 
-    private static void example1(Level level, List<Triple<SMEIO, String, IO>> trace){
+    private static void example1(Level level, List<TraceItem> trace){
         System.out.println("Running at level: " + level.toString());
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
@@ -18,7 +18,7 @@ public class Main {
         highFile.output(lowContents, level, trace);
     }
 
-    private static void example2(Level level, List<Triple<SMEIO, String, IO>> trace){
+    private static void example2(Level level, List<TraceItem> trace){
         System.out.println("Running at level: " + level.toString());
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
@@ -28,7 +28,7 @@ public class Main {
         lowFile.output(highContents, level, trace);
     }
 
-    private static void example3(Level level, List<Triple<SMEIO, String, IO>> trace){
+    private static void example3(Level level, List<TraceItem> trace){
         System.out.println("Running at level: " + level.toString());
         SMEStandardIO lowLevelStandardIO = new SMEStandardIO(Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
@@ -37,7 +37,7 @@ public class Main {
         highFile.output(input, level, trace);
     }
 
-    private static void example4(Level level, List<Triple<SMEIO, String, IO>> trace){
+    private static void example4(Level level, List<TraceItem> trace){
         System.out.println("Running at level: " + level.toString());
         SMEStandardIO highLevelStandardIO = new SMEStandardIO(Level.HIGH);
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
