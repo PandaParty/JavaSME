@@ -43,10 +43,10 @@ public class SMEFile implements SMEIO{
                     trace.remove(t);
                     return res;
                 }
-                return "Shit's on fire, yo";
             }
+            return "Shit's on fire, yo";
         }
-        return "This is not accessible";
+        return "";
     }
 
     @Override

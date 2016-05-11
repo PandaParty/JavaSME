@@ -1,20 +1,11 @@
 import sme.*;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args){
-        List<Triple<SMEIO, String, IO>> trace = new ArrayList<>();
-        example4(Level.LOW, trace);
-        example4(Level.HIGH, trace);
-
-        try{
-            JavaSME.checkFlow(trace);
-        }catch(Exception e){
-            System.err.println(e.getMessage());
-        }
+        JavaSME.execute(Main::example4);
     }
 
     private static void example1(Level level, List<Triple<SMEIO, String, IO>> trace){
