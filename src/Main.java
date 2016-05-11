@@ -10,22 +10,10 @@ public class Main {
         example4(Level.LOW, trace);
         example4(Level.HIGH, trace);
 
-        for(Triple<SMEIO, String, IO> t : trace){
-            System.out.println("Channel: " + t.a.toString() + " "+ t.c.toString() + ":" + t.b.toString());
-            if(t.c == IO.OUTPUT) {
-                boolean foundMatch = false;
-                for (Triple<SMEIO, String, IO> other : trace) {
-                    if (t != other) {
-                        if (t.a.equals(other.a) && t.b.equals(other.b)) {
-                            System.out.println("Duplicate found");
-                            foundMatch = true;
-                        }
-                    }
-                }
-                if(!foundMatch){
-                    System.out.println("ALERT ALERT ALERT!");
-                }
-            }
+        try{
+            JavaSME.checkFlow(trace);
+        }catch(Exception e){
+            System.err.println(e.getMessage());
         }
     }
 
