@@ -16,7 +16,7 @@ public class SMEFile implements SMEIO{
 
     public void output(String input, Level runLevel, List<TraceItem> trace){
         trace.add(new TraceItem(this, input, IO.OUTPUT));
-        if(runLevel == level){
+        if(runLevel == level && !input.equals("")){
             try {
                 Files.write(file.toPath(), input.getBytes());
             }catch(IOException ioe){
@@ -44,7 +44,7 @@ public class SMEFile implements SMEIO{
                     return res;
                 }
             }
-            return "Shit's on fire, yo";
+            return "";
         }
         return "";
     }

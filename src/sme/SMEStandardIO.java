@@ -32,7 +32,7 @@ public class SMEStandardIO implements SMEIO {
                     return res;
                 }
             }
-            return "Shit's on fire, yo";
+            return "";
         }
         return "";
     }

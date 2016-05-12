@@ -1,3 +1,5 @@
+package examples;
+
 import sme.*;
 
 import java.io.File;
@@ -5,11 +7,10 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args){
-        JavaSME.execute(Main::example4);
+        JavaSME.execute(Main::highToLow);
     }
 
-    private static void example1(Level level, List<TraceItem> trace){
-        System.out.println("Running at level: " + level.toString());
+    private static void lowToHigh(Level level, List<TraceItem> trace){
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
         lowFile.output("Text to put in file", level, trace);
@@ -18,8 +19,7 @@ public class Main {
         highFile.output(lowContents, level, trace);
     }
 
-    private static void example2(Level level, List<TraceItem> trace){
-        System.out.println("Running at level: " + level.toString());
+    private static void highToLow(Level level, List<TraceItem> trace){
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
         highFile.output("Text to put in file", level, trace);
@@ -28,8 +28,7 @@ public class Main {
         lowFile.output(highContents, level, trace);
     }
 
-    private static void example3(Level level, List<TraceItem> trace){
-        System.out.println("Running at level: " + level.toString());
+    private static void lowStdIOToHigh(Level level, List<TraceItem> trace){
         SMEStandardIO lowLevelStandardIO = new SMEStandardIO(Level.LOW);
         SMEFile highFile = new SMEFile(new File("highFile.txt"), Level.HIGH);
         lowLevelStandardIO.output("Please input what to put in file", level, trace);
@@ -37,8 +36,7 @@ public class Main {
         highFile.output(input, level, trace);
     }
 
-    private static void example4(Level level, List<TraceItem> trace){
-        System.out.println("Running at level: " + level.toString());
+    private static void highBranchToLow(Level level, List<TraceItem> trace){
         SMEStandardIO highLevelStandardIO = new SMEStandardIO(Level.HIGH);
         SMEFile lowFile = new SMEFile(new File("lowFile.txt"), Level.LOW);
         highLevelStandardIO.output("Please input your password", level, trace);

@@ -8,7 +8,9 @@ public class JavaSME {
 
     public static void execute(BiConsumer<Level, List<TraceItem>> f){
         List<TraceItem> trace = new ArrayList<>();
+        System.out.println("Running at level: LOW");
         f.accept(Level.LOW, trace);
+        System.out.println("Running at level: HIGH");
         f.accept(Level.HIGH, trace);
         try{
             checkFlow(trace);
